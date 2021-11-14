@@ -26,7 +26,7 @@
     
   </div>
   <div class="flex justify-between mt-6 relative">
-      <input type="text" placeholder="search your friend" 
+      <input type="text" v-model="search" placeholder="search your friend" 
       class="search-input-box  border  border-white w-9/12 h-12 customGray rounded-xl"/>
       <img class="ml-4 mr-2.5 w-4 h-4 absolute position-search-img"
        v-bind:src="require('../assets/' + imgSerch)">
@@ -49,16 +49,38 @@
         </div>
       </div>
     </div>
-<profile-image  v-for="(item, index) in listOfContact"
+        <profile-image class="overflow-y-scroll"  v-for="(item, index) in smallList"
           v-bind:key="index"  :contactData="item" />
+    </div>
 </div>
 
   <div class="full-content-height">
     
-    <contact-row  v-for="item in listOfContact"
+    <router-link to="/chat">
+    <contact-row  v-for="item in filteredlList(search, listOfContact)"
      v-bind:key="item"
      :contactData="item"/>
+     </router-link> 
   </div>
+
+      <footer>
+    <div class="w-full bottom-0 h-16 bg-white rounded-t-3xl">
+      <div class="flex justify-center ">
+         <img  class=" m-auto my-5 ml-28  mr-16 w-5 h-5  "
+           v-bind:src="require('../assets/' + imgMsg)"> 
+            <img  class="  m-auto  w-10 h-9  "
+           v-bind:src="require('../assets/' + imgLine)">
+           <img  class="m-auto my-5 mr-28  ml-16 w-5 h-5  "
+           v-bind:src="require('../assets/' + imgContact)">
+
+      </div>
+
+     </div>
+   
+      </footer>
+  
+  </main>
+
 </template>
 
 <script>
@@ -66,30 +88,7 @@ import ContactRow from "../components/ContactRow.vue"
 import {userList} from "../../user list"
 import ProfileImage from '../components/ProfileImage.vue';
 export default {
-  methods: {
-   getOnlines: (listUser) => {
-     console.log(listUser);
-      let onlineNum = 0;
-     listUser.forEach((item) => {
-        if (item.online) onlineNum += 1;
-      });
-      return onlineNum;
-    },
-    getListOfOnlines: (listUser) => {
-      let onlineList = [];
-      listUser.forEach((item) => {
-        if (item.online) onlineList.push(item);
-      });
-      return onlineList;
-      //console.log(onlineList)
-      // this.listOfOnlineContact = onlineList;
-      // return onlineList ;
-    },
-  components: { ContactRow, ProfileImage },
-  name: 'Home',
-   //props:['listOfContact'],
-
-   data: function() {
+data: function() {
      
     return {
       imgPerson: "Rahul.png",
@@ -102,17 +101,64 @@ export default {
       imgLine:"line.svg",
       imgMenu: "menu.svg",
       listOfContact: userList,
-      smallList : userList.splice(0,5)
-     
+      smallList : userList.splice(0,10),
+      search : ""
     };
    },
-}
+ methods: {
+
+  getOnlines: (listUser) => {
+     //console.log(listUser);
+      let onlineNum = 0;
+     listUser.forEach((item) => {
+        if (item.online) onlineNum += 1;
+      });
+      return onlineNum;
+    },
+  //   getListOfOnlines: (listUser) => {
+  //     let onlineList = [];
+  //     listUser.forEach((item) => {
+  //       if (item.online) onlineList.push(item);
+  //     });
+  //     return onlineList;
+  //     //console.log(onlineList)
+  //     // this.listOfOnlineContact = onlineList;
+  //     // return onlineList ;
+  // },
+      //     localize: (listUser) =>
+// {
+//   var d = new Date(listUser + "UTC");
+//   document.write(d.toString());
+// }
+    filteredlList:function(searchName, list){ 
+
+          return list.filter((item)=>{
+          return item.name.match(searchName);
+        });
+    },
+    say: function (message) {
+      alert(message)
+    },
+    
+    },
+    
+  
+
+
+  components: { ContactRow, ProfileImage },
+  name: 'Home',
+   //props:['listOfContact'],
+
+   
+};
+
 
 
 
 </script>
 
-<style>
+<style >
+
 .customGray{
   background-color: #EFEFEF;
 }
