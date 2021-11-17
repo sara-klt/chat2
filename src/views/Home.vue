@@ -26,7 +26,7 @@
     
   </div>
   <div class="flex justify-between mt-6 relative">
-      <input type="text" v-model="search" placeholder="search your friend" 
+      <input type="text"  v-model="search" placeholder="search your friend" 
       class="search-input-box  border  border-white w-9/12 h-12 customGray rounded-xl"/>
       <img class="ml-4 mr-2.5 w-4 h-4 absolute position-search-img"
        v-bind:src="require('../assets/' + imgSerch)">
@@ -36,7 +36,7 @@
         
       </div>
     </div>
-<div class="flex ">
+<!-- <div class="flex ">
     <div class="mt-6 flex flex-col ">
       <div class="rounded-2xl border border-white customGray w-16 h-20" >
         <div class="flex flex-col items-center  relative">
@@ -49,20 +49,23 @@
         </div>
       </div>
     </div>
-        <profile-image class="overflow-y-scroll"  v-for="(item, index) in smallList"
+        <profile-image v-for="(item, index) in smallList"
           v-bind:key="index"  :contactData="item" />
-    </div>
+    </div> -->
+    <horizontal-scroll  :dataItems="listOfContact" />
+  
+     <vertical-scroll :search="search" :dataItems="listOfContact" />
 </div>
 
-  <div class="full-content-height">
+  <!-- <div class="full-content-height"> -->
     
-    <router-link to="/chat">
+    <!-- <router-link to="/chat">
     <contact-row  v-for="item in filteredlList(search, listOfContact)"
      v-bind:key="item"
      :contactData="item"/>
-     </router-link> 
-  </div>
+     </router-link>  -->
 
+<!-- </div> -->
       <footer>
     <div class="w-full bottom-0 h-16 bg-white rounded-t-3xl">
       <div class="flex justify-center ">
@@ -84,9 +87,9 @@
 </template>
 
 <script>
-import ContactRow from "../components/ContactRow.vue"
 import {userList} from "../../user list"
-import ProfileImage from '../components/ProfileImage.vue';
+import HorizontalScroll from '../components/HorizontalScroll.vue';
+import VerticalScroll from '../components/VerticalScroll.vue';
 export default {
 data: function() {
      
@@ -115,27 +118,13 @@ data: function() {
       });
       return onlineNum;
     },
-  //   getListOfOnlines: (listUser) => {
-  //     let onlineList = [];
-  //     listUser.forEach((item) => {
-  //       if (item.online) onlineList.push(item);
-  //     });
-  //     return onlineList;
-  //     //console.log(onlineList)
-  //     // this.listOfOnlineContact = onlineList;
-  //     // return onlineList ;
-  // },
-      //     localize: (listUser) =>
-// {
-//   var d = new Date(listUser + "UTC");
-//   document.write(d.toString());
-// }
-    filteredlList:function(searchName, list){ 
-
-          return list.filter((item)=>{
-          return item.name.match(searchName);
-        });
-    },
+  
+          localize: (listUser) =>
+{
+  var d = new Date(listUser + "UTC");
+  document.write(d.toString());
+},
+   
     say: function (message) {
       alert(message)
     },
@@ -145,7 +134,7 @@ data: function() {
   
 
 
-  components: { ContactRow, ProfileImage },
+  components: { HorizontalScroll, VerticalScroll },
   name: 'Home',
    //props:['listOfContact'],
 

@@ -14,9 +14,7 @@
         </div>
         <p class="w-4/12 text-xs mt-8">{{item.Date}}</p>
     </div>
-
-  
-
+    
 </template>
 
 <script>
