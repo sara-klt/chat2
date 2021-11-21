@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import {userList} from "../../user list"
 import HorizontalScroll from '../components/HorizontalScroll.vue';
 import VerticalScroll from '../components/VerticalScroll.vue';
@@ -111,7 +113,7 @@ data: function() {
  methods: {
 
   getOnlines: (listUser) => {
-     //console.log(listUser);
+     
       let onlineNum = 0;
      listUser.forEach((item) => {
         if (item.online) onlineNum += 1;
@@ -119,12 +121,7 @@ data: function() {
       return onlineNum;
     },
   
-          localize: (listUser) =>
-{
-  var d = new Date(listUser + "UTC");
-  document.write(d.toString());
-},
-   
+
     say: function (message) {
       alert(message)
     },

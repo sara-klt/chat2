@@ -1,6 +1,11 @@
 <template>
     <router-link to="/chat">
     <div class="full-content-height"  id="infinite-list2">
+        <!-- <div  id="components-demo">
+            <contact-row v-for="(item, index) in filteredlList(search, items, dataItems)" v-bind:key="index"/>
+
+        
+        </div> -->
     
      <div v-for="(item, index) in filteredlList(search, items, dataItems)" v-bind:key="index"
       class="flex  rounded-2xl border
@@ -14,13 +19,15 @@
           <p class="text-sm"> {{item.description}} </p>
 
         </div>
-        <p class="w-4/12 text-xs mt-8">{{item.Date}}</p>
+        <p class="text-center w-4/12 text-xs mt-8"> {{new Date(item.Date).format("UTC:h:MM")}}</p>
     </div> 
     </div>
      </router-link>
 </template>
- 
+     
 <script>
+
+
 import ContactRow from "../components/ContactRow.vue"
 export default {
   components: { ContactRow },
@@ -56,6 +63,7 @@ export default {
     },
 
     methods: {
+         
         loadMore () {
         
         /** This is only for this demo, you could 
@@ -74,7 +82,7 @@ export default {
         
         },
          filteredlList:function(searchName, infList, allItem){ 
-            console.log('run func', searchName);
+           
             if (searchName) {
                 console.log("searchName",searchName)
                 let searchedList =  allItem.filter((item)=>{
@@ -83,9 +91,13 @@ export default {
                 console.log(searchedList);
                 return searchedList;
             } 
-        console.log('??');
+       
         return infList;
     },
+    getHumanDate : function (date) {
+                return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            }
+  
     },
 }
 

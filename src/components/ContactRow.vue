@@ -12,12 +12,13 @@
           <p class="text-sm"> {{item.description}} </p>
 
         </div>
-        <p class="w-4/12 text-xs mt-8">{{item.Date}}</p>
+        <p class=" text-center w-4/12 text-xs mt-8">{{item.time}}</p>
     </div>
     
 </template>
 
 <script>
+// new Vue({ el: '#components-demo' })
 
 export default {
   name: 'ContactRow',
@@ -29,7 +30,13 @@ export default {
      item:this.contactData,
     };
    },
+methods: {
+  
+
+},
 }
+
+
 
 
 
